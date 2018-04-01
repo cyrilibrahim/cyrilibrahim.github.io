@@ -27,9 +27,7 @@
       // Add necessary point to the heatmap
       var heatMapData = getHeatMap(listing_2016);
 
-      //addListingToMap(mapSvg, listing_2016, map);
-      console.log(heatMapData);
-      var heatLayer = L.heatLayer(heatMapData, {maxZoom: 5, radius: 6,blur: 8,gradient : {0.4: 'white', 0.65: '#0013BD', 1: '#FF5A5F'}});
+      var heatLayer = L.heatLayer(heatMapData, {maxZoom: 5, radius: 5.8,blur: 7.6,minOpacity:0.6, gradient : {0.0: 'white', 0.95: '#FF5A5F' , 1:'#BD0202'}});
       map.addLayer(heatLayer);
 
     })

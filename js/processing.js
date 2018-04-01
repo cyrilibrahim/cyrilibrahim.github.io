@@ -22,11 +22,5 @@ function convertNumbers(data) {
 function createLatLngPoints(data){
   data.forEach(function(d, i) {
       d.LatLng = new L.LatLng(d.latitude, d.longitude);
-      if(Math.random() < 1){
-        d.visible_zoom_14 = false;
-      }else{
-        d.visible_zoom_14 = true;
-      }
   });
-  console.log(data);
 }

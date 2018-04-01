@@ -11,7 +11,7 @@ function initTileLayer(L, map) {
 	    }).addTo(map);
 
 	map.setView([45.51475,-73.67225], 12);
-	//map.dragging.disable();
+	map.dragging.disable();
 
 	/* Initialize the SVG layer */
 	map._initPathRoot();
