@@ -1,5 +1,5 @@
 *{
-	font-family: "Varela Round";
+	font-family: "Signika";
 }
 
 h1{
@@ -7,4 +7,27 @@ h1{
 	color: white;
 	text-align: center;
 	font-weight: bold;
+	line-height: 80px;
+}
+
+.section{
+	text-align: center;
+}
+
+
+#scroll_arrow{
+	font-size: 3rem;
+	color: white;
+	position: absolute;
+	bottom: 40px;
+}
+
+#map{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+.not_vertically_centered .fp-tableCell{
+     vertical-align: top;
 }
