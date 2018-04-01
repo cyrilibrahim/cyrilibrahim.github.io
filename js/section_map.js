@@ -11,7 +11,7 @@ function initTileLayer(L, map) {
 	    }).addTo(map);
 
 	map.setView([45.51475,-73.67225], 12);
-	map.dragging.disable();
+	//map.dragging.disable();
 
 	/* Initialize the SVG layer */
 	map._initPathRoot();
@@ -32,6 +32,7 @@ function initSvgLayer(map, div_container) {
 }
 
 function addListingToMap(g, data, map){
+	console.log(data.length);
 	var feature = g.selectAll("circle")
 		.data(data)
 		.enter().append("circle")
@@ -39,24 +40,25 @@ function addListingToMap(g, data, map){
 		.style("opacity", .6) 
 		.style("fill-opacity", 1)
 		.style("fill", "red")
-		.attr("r", 2);  
-	
-	map.on("viewreset", update);
-	update();
+		.attr("r", 2)
+		.attr("visibility", function(d){if(d.visible_zoom_14 == true){return ""}else{return "hidden";}});  
+	//map.on("viewreset", update);
+	//update();
 
 	function update() {
 
-
 		feature.attr("transform", 
-		function(d) { 
-			return "translate("+ 
-				map.latLngToLayerPoint(d.LatLng).x +","+ 
-				map.latLngToLayerPoint(d.LatLng).y +")";
-			}
-		)
-
+		function(d) {
+				return "translate("+ 
+					map.latLngToLayerPoint(d.LatLng).x +","+ 
+					map.latLngToLayerPoint(d.LatLng).y +")";
+		});
 	}
 
 	update();
 
+}
+
+function getHeatMap(data){
+	return data.map( d => d.LatLng);
 }
