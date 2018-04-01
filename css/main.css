@@ -3,12 +3,15 @@
 }
 
 h1{
-	font-size: 3rem;
+	font-size: 3.5rem;
 	color: white;
 	text-align: center;
 	font-weight: bold;
 	line-height: 80px;
 }
+
+
+/* Section d'accueil */
 
 .section{
 	text-align: center;
@@ -19,14 +22,40 @@ h1{
 	font-size: 3rem;
 	color: white;
 	position: absolute;
-	bottom: 40px;
+	top: 50%;
+	z-index: 3;
 }
+
+#section_accueil h1{
+	position: absolute;
+	top: 25%;
+	width: 100%;
+}
+
+#bg {
+	position: fixed;
+	bottom: 0%;
+	left: -50%;
+	width: 200%; 
+}
+#bg img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	min-width: 52%;
+}
+/* Section map */
 
 #map{
 	width: 100%;
 	height: 100%;
 	position: absolute;
 }
+
+
 
 .not_vertically_centered .fp-tableCell{
      vertical-align: top;
