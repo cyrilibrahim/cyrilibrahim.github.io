@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css"  href="assets/bootstrap/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="assets/fullPage/jquery.fullpage.min.css" />
 		<link rel="stylesheet" type="text/css"  href="assets/leaflet/leaflet.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css"  href="assets/d3/d3,slider.css" rel="stylesheet">
 
 		<link href="https://fonts.googleapis.com/css?family=Oswald|Varela+Round|Signika" rel="stylesheet">
 
@@ -31,7 +32,14 @@
 			</div>
 			<div class="section not_vertically_centered">
 				<div id="map">
-					
+				</div>
+				<div id="map_slider">
+				</div>
+				<div id="map_info">
+					<p class="big_text">Annonces &nbsp; <span id="map_nb_announces"></span></p>
+					<p class="">Logements complet &nbsp; <span id="map_nb_appartment"></span></p>
+					<p class="">Chambres personnelles &nbsp; <span id="map_nb_room"></span></p>
+					<p class="">Chambres partagées  &nbsp; <span id="map_nb_other"></span></p>
 				</div>
 			</div>
 			<div class="section">Some section</div>
@@ -42,14 +50,7 @@
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-		<!-- FullPage.js -->
-		<!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
-		<script src="assets/fullPage/jquery.easings.min.js"></script>
-		<!-- This following line is only necessary in the case of using the option `scrollOverflow:true` -->
-		<script type="text/javascript" src="assets/fullPage/scrolloverflow.min.js"></script>
-		<script type="text/javascript" src="assets/fullPage/jquery.fullpage.min.js"></script>
-		<script src="assets/fullPage/init_fullpage.js"></script>
-		
+
 		<!-- BOOTSTRAP v4 --> 
 		<script src="assets/bootstrap/bootstrap.min.js"></script>
 
@@ -59,18 +60,26 @@
 		<!-- D3.js -->
 		<script type="text/javascript" src="assets/d3/d3.v3.js"></script>
 		<script type="text/javascript" src="assets/d3/d3-queue.v3.min.js"></script>
+		<script type="text/javascript" src="assets/d3/d3.slider.js"></script>
+		<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
 
 		<!-- Leaflet -->
 		<script type="text/javascript" src="assets/leaflet/leaflet.js"></script>
 		<script type="text/javascript" src="assets/leaflet/leaflet-heat.js"></script>
-
-
 
 		<!-- My scripts --> 
 		<script type="text/javascript" src="js/processing.js"></script>
 		<script type="text/javascript" src="js/section_map.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 
+		<!-- FullPage.js -->
+		<!-- This following line is optional. Only necessary if you use the option css3:false and you want to use other easing effects rather than "linear", "swing" or "easeInOutCubic". -->
+		<script src="assets/fullPage/jquery.easings.min.js"></script>
+		<!-- This following line is only necessary in the case of using the option `scrollOverflow:true` -->
+		<script type="text/javascript" src="assets/fullPage/scrolloverflow.min.js"></script>
+		<script type="text/javascript" src="assets/fullPage/jquery.fullpage.min.js"></script>
+		<script src="assets/fullPage/init_fullpage.js"></script>
+		
 	</body>
 
 </html>
