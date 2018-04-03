@@ -34,8 +34,20 @@
     });
   }
 
+  function parseCalendarDate(data){
+    var format = d3.time.format("%Y-%m-%d");
+    data = data.map(function(e) { 
+      e["key"] = format.parse(e["key"]);
+      return e;
+    });
+  }
+
 
   function filterColumns(data){
     
+  }
+
+  function getPriceBySuburb(data){
+
   }
 

@@ -66,8 +66,8 @@ h1{
 #map_info{
 	position: absolute;
 	bottom: 20%;
-	right: 10%;
-	text-align: right;
+	left: 10%;
+	text-align: left;
 }
 
 #map_info .big_text{

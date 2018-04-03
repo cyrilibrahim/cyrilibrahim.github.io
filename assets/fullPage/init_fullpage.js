@@ -14,7 +14,7 @@ $(document).ready(function() {
 			if(index == 2){
 				//console.log(queue);
 				//queue.animateMap();
-				console.log(listing_data);
+				//console.log(listing_data);
       			animateMap();
 			}
 		}
