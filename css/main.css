@@ -99,16 +99,51 @@ h1{
 /** Neighborhood line char */
 #price_by_neighborhood_chart_container{
 	position: absolute;
-	bottom: 5%;
+	bottom: 2%;
 	width: 70%;
 	left: 3%;
 	height: 80%;
+	text-align: center;
+}
+#price_by_neighborhood_legend_container{
+	position: absolute;
+	bottom: 2%;
+	width: 27%;
+	left: 73%;
+	height: 80%;
+	text-align: center;
+}
+#price_by_neighborhood h1{
+	text-align: center;
+	width: 100%;
+	color: black;
+	font-size: 3rem;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	position: absolute;
+	top: 4%;
 }
 
-#price_by_neighborhood h1{
-	color: black;
-	font-size: 2.5rem;
-	position: absolute;
-	top: 3%;
-	left: 8%;
+
+/* FILTER SECTION */ 
+
+.big_result{
+	font-size: 7rem;
+}
+
+#filter_result h3{
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+#filter_result h3, #filter_result span{
+	color: rgb(255, 90, 95);
+}
+
+#filter_section h1{
+	color: white;
+	background-color: rgb(255, 90, 95);
+	padding-bottom: 30px;
+	padding-top: 30px;
+	margin-bottom: 130px;
 }

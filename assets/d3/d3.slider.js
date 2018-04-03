@@ -43,7 +43,7 @@ return function module() {
   var axisScale,
       dispatch = d3.dispatch("slide", "slideend"),
       formatPercent = d3.format(".2%"),
-      tickFormat = d3.time.format("%Y"),
+      tickFormat = d3.time.format("%Y-%m"),
       handle1,
       handle2 = null,
       divRange,

@@ -55,7 +55,7 @@
       // Initialise à la première date
       slideMapUpdate(listing_2016, heatLayer ,startDate);
 
-
+      loadSectionFilter();
       //}
 
     }) 

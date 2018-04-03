@@ -1,6 +1,6 @@
 (function(d3, localization) {
 
-var minListing = 80;
+var minListing = 50;
 
 var margin = {top: 20, right: 20, bottom: 100, left: 50},
 width = $("#price_by_neighborhood_chart_container").width() - margin.left - margin.right,
@@ -11,6 +11,11 @@ var svg_line_chart = d3.select("#price_by_neighborhood_chart_container").append(
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg_line_chart_legend = d3.select("#price_by_neighborhood_legend_container").append("svg")
+    .attr("width", $("#price_by_neighborhood_legend_container").width())
+    .attr("height", $("#price_by_neighborhood_legend_container").height())
+  .append("g")
 
 var g_line_chart = svg_line_chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -38,7 +43,6 @@ d3.json("./data/price_by_neighborhood.json", function(error, data) {
   if (error) {
     throw error;
   }
-  console.log(data);
 
   data = filterDataMinListing(data, minListing);
   domainColorNeighborhood(neighborhood_color, data);
@@ -59,6 +63,10 @@ d3.json("./data/price_by_neighborhood.json", function(error, data) {
   g_line_chart.append("g")
     .attr("class", "y axis")
     .call(yAxis);
+
+  // Legend
+  legend(svg_line_chart_legend, data, neighborhood_color);
+
 });
 
 
@@ -79,7 +87,7 @@ function parseDateNeighborhood(format, data) {
 }
 
 function filterDataMinListing(data, minListing){
-  return data.filter(function(d){console.log(d.nb_annonces); return d.nb_annonces > minListing;});
+  return data.filter(function(d){return d.nb_annonces > minListing;});
 }
 
 function sortByDateNeighborhood(data){
@@ -129,9 +137,76 @@ function createContextLineChart(g, sources, line, color) {
 
 
   neighborhood.append("path")
-      .attr("class", "line")
+      .attr("class", "line line_neighborhood")
       .attr("d", function(d) { return line(d.values); })
-      .style("stroke", function(d) { return color(d.quartier); });
+      .style("stroke", function(d) { return color(d.quartier); })
+      .style("stroke-width", function(d){return 0.008 * d.nb_annonces})
+      .style("opacity", 0.8);
+}
+
+
+function legend(svg, sources, color, width) {
+  // TODO: Créer la légende accompagnant le graphique.
+  
+
+  legend = svg.append("g")
+    .attr("class","legend")
+    .attr("transform","translate(50,30)")
+    .style("font-size","20px")
+
+   var circles = legend.selectAll('circle')
+    .data(sources)
+    .enter()
+  .append("circle")
+      .attr("cx", 30)
+      .attr("cy", function(d, i){ return i *  35;})
+      .attr("r", 14)
+      .attr("activated", "true")
+      .style("fill", function(d) { 
+         return color(d.quartier);
+     })
+    .style("stroke", "black")
+    .style("stroke-width", 0.5);
+    
+   circles.on("click", function(d, i){
+    displayLine(i, color);
+   });
+
+  legend.selectAll('text')
+  .data(sources)
+  .enter()
+    .append("text")
+      .attr("x", 30 + 30)
+      .attr("y", function(d, i){ return i *  35 + 8;})
+      .text(function(d) { return d.quartier;});
+
+}
+
+function displayLine(element, color) {
+  // TODO: Compléter le code pour faire afficher ou disparaître une ligne en fonction de l'élément cliqué.
+  var circle = d3.select("g.legend").selectAll("circle")
+    .filter(function (d, i) { return i === element;});
+
+  var line = d3.selectAll(".line_neighborhood")
+    .filter(function (d, i) { return i === element;});
+
+
+  /*var line = d3.selectAll(".line")
+    .filter(function (d, i) { return i%10 === element;});*/
+  
+  if(circle.attr("activated") == "true"){
+    circle.style("fill", "white");
+    circle.attr("activated","false");
+    line.style("opacity", 0);
+
+  }else{
+
+    circle.style("fill", function(d){return color(d.quartier);});
+    circle.attr("activated","true");
+    line.style("opacity", 0.8);
+  }
+
+
 }
 
 function sortByDateAscending(a, b) {
