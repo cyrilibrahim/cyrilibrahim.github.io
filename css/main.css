@@ -10,6 +10,23 @@ h1{
 	line-height: 80px;
 }
 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.y.axis path {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+}
+
 
 /* Section d'accueil */
 
@@ -76,4 +93,22 @@ h1{
 
 .not_vertically_centered .fp-tableCell{
      vertical-align: top;
+}
+
+
+/** Neighborhood line char */
+#price_by_neighborhood_chart_container{
+	position: absolute;
+	bottom: 5%;
+	width: 70%;
+	left: 3%;
+	height: 80%;
+}
+
+#price_by_neighborhood h1{
+	color: black;
+	font-size: 2.5rem;
+	position: absolute;
+	top: 3%;
+	left: 8%;
 }

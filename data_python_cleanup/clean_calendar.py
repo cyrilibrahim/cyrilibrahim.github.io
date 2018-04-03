@@ -91,7 +91,7 @@ for key, value in neighborhood_price_by_month_dict.items():
     values = []
     for date, price in value.items():
         values.append({"date": date, "price" : price})
-    neighborhood_object = {"quartier":key,"values":values}
+    neighborhood_object = {"quartier":key,"values":values, "nb_annonces": len(neighborhood_dict[key]) if key is not "other" else 0}
     neighborhood_price_by_month.append(neighborhood_object)
 
 with open('../data/price_by_neighborhood.json', 'w') as outfile:
