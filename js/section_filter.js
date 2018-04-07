@@ -7,9 +7,12 @@ var selections_options = {};
 
 
 function loadSectionFilter(){
-		
+	
+	// Va automatiquement chercher la liste des choix possible et lie le filtre aux données à filtrer 
+	// pour les filtres de types selections
 	changeSelectOptions("#quartier_selection",findOptions("neighbourhood"), "neighbourhood");
 	changeSelectOptions("#type_location_selection",findOptions("room_type"), "room_type");
+	
 	$("#price_slider").slider({});
 
 	updateFilteredData();
@@ -17,18 +20,14 @@ function loadSectionFilter(){
 }
 
 function updateFilteredData(){
-	console.log(Object.keys(selections_options));
-	console.log(selections_options);
 	var filtered_data = listing_data.filter(function(e){
 		var condition = true;
 		Object.keys(selections_options).forEach(function (key) {
-			//console.log(key);
 			condition = condition && ((e[key] == selections_options[key] ) ||  selections_options[key] === "Tous");
 		});
-		//return (e.neighbourhood == selections_options["quartier"] ) ||  selections_options["quartier"] === "Tous";
 		return condition;
 	});
-	// console.log(filtered_data);
+
 	var sum_reviews = 0;
 	filtered_data.forEach(function(e){
 		sum_reviews += parseFloat(e.number_of_reviews);
@@ -61,11 +60,7 @@ function changeSelectOptions(select_id,newOptions, key){
 	selections_options[key] = "Tous";
     
 }
-/*
-var newOptions = {"Option 1": "value1",
-  "Option 2": "value2",
-  "Option 3": "value3"
-};*/
+
 function findOptions(property){
 	var options_list = []
 	listing_data.forEach(function(e){
@@ -74,7 +69,6 @@ function findOptions(property){
 		}
 	});
 	return options_list;
-	//console.log(options_list);
 }
 
 Array.prototype.contains = function(obj) {

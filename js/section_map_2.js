@@ -9,14 +9,34 @@
 
   var nb_step_animation = 10;
   var heatLayer;
+  var mapAnimatedOnce = false;
+
+
+  var cfg_map = {
+    // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+    // if scaleRadius is false it will be the constant radius used in pixels
+    "radius": 8,
+    "maxOpacity": 0.7, 
+    // scales the radius based on map zoom
+    "scaleRadius": false, 
+    // if set to false the heatmap uses the global maximum for colorization
+    // if activated: uses the data maximum within the current map boundaries 
+    //   (there will always be a red spot with useLocalExtremas true)
+    "useLocalExtrema": false,
+    // which field name in your data represents the latitude - default "lat"
+    latField: 'lat',
+    // which field name in your data represents the longitude - default "lng"
+    lngField: 'lng',
+    // which field name in your data represents the data value - default "value"
+    valueField: 'count'
+  };
+
+  var heatmapLayer = new HeatmapOverlay(cfg_map);
 
   /* Data */
   var listing_data;
   var price_by_suburb;
 
-  var mapAnimatedOnce = false;
-
-  var data_ready = false;
   /***** Chargement des données *****/
   d3.queue()
     .defer(d3.csv, "./data/listings.csv")
@@ -40,8 +60,9 @@
 
       /**** Traite et ajoute les points necessaires à la HeatMap ***/
       var heatMapData = getHeatMap(listing_2016);
-      heatLayer = L.heatLayer(heatMapData, {maxZoom: 12, radius: 7.8, gradient : { 0.0: 'white', 0.8: '#FF5A5F',0.9:'red'}});
-      map.addLayer(heatLayer);
+      //heatLayer = L.heatLayer(heatMapData, {maxZoom: 12, radius: 7.8, gradient : { 0.0: 'white', 0.8: '#FF5A5F',0.9:'red'}});
+      map.addLayer(heatmapLayer);
+      heatmapLayer.setData(heatMapData);
 
       /********  Création du slider pour la map *********/
       
@@ -49,11 +70,11 @@
       var slider = d3.select('#map_slider').call(d3.slider()
         .axis(true).min(startDate).max(endDate).step(secondsInDay)
         .on("slide", function(evt, value) {
-          slideMapUpdate(listing_2016, heatLayer ,value);
+          slideMapUpdate(listing_2016, heatmapLayer ,value);
         })
       );
       // Initialise à la première date
-      slideMapUpdate(listing_2016, heatLayer ,startDate);
+      slideMapUpdate(listing_2016, heatmapLayer ,startDate);
 
       loadSectionFilter();
       //}
@@ -73,13 +94,13 @@ function animateMap(){
        if (time <= nb_step_animation) { 
           time++;
           t += step;
-          slideMapUpdate(listing_data, heatLayer ,date_interpolator(t));
+          slideMapUpdate(listing_data, heatmapLayer ,date_interpolator(t));
           $("#handle-one").css('left', t*100+"%");
        }
        else { 
           clearInterval(interval);
        }
-    }, 20);
+    }, 100);
     mapAnimatedOnce = true;
   }
 }
@@ -146,7 +167,14 @@ function addListingToMap(g, data, map){
 }
 
 function getHeatMap(data){
-	return data.map( d => d.LatLng);
+	var points =  data.map( function(d){var e = d.LatLng; e.count = 1000; return e});
+  var dict_return = {};
+  dict_return.data  = points;
+  dict_return.max = 10000;
+  console.log(dict_return);
+  //console.log(dict_return);
+  //dict_return[max] = 8;
+  return dict_return;
 }
 
 
@@ -176,8 +204,8 @@ function slideMapUpdate(data, heatMap, date){
 	$("#map_nb_other").text(other);
 
 	heatMapData = getHeatMap(filtered_listing);
-	heatMap.setLatLngs(heatMapData);
-
+	heatMap.setData(heatMapData);
+  console.log(heatMap);
 }
 
 
