@@ -7,7 +7,7 @@
   var secondsInDay = 60 * 60 * 24;
   var date_interpolator = d3.interpolateDate(startDate, endDate);
 
-  var nb_step_animation = 10;
+  var nb_step_animation = 5;
   var heatLayer;
   var mapAnimatedOnce = false;
 
@@ -28,7 +28,16 @@
     // which field name in your data represents the longitude - default "lng"
     lngField: 'lng',
     // which field name in your data represents the data value - default "value"
-    valueField: 'count'
+    valueField: 'count',
+    blur: .75,
+  gradient: {
+    // enter n keys between 0 and 1 here
+    // for gradient color customization
+    '.5': 'rgb(255, 90, 95)',
+    '.8': 'red',
+    '.95': 'rgb(176, 0, 5)',
+    '.99': 'blue'
+  }
   };
 
   var heatmapLayer = new HeatmapOverlay(cfg_map);
@@ -113,11 +122,11 @@ function initTileLayer(L, map) {
 	L.tileLayer(
 	    'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
 	    attribution: '&copy; ' + mapLink + ' Contributors',
-	    minZoom: 12,
-	    maxZoom: 14
+	    minZoom: 13,
+	    maxZoom: 13
 	    }).addTo(map);
 
-	map.setView([45.51475,-73.67225], 12);
+	map.setView([45.51475,-73.67225], 13);
 	map.dragging.disable();
 
 	/* Initialize the SVG layer */
@@ -139,7 +148,6 @@ function initSvgLayer(map, div_container) {
 }
 
 function addListingToMap(g, data, map){
-	console.log(data.length);
 	var feature = g.selectAll("circle")
 		.data(data)
 		.enter().append("circle")
@@ -167,12 +175,10 @@ function addListingToMap(g, data, map){
 }
 
 function getHeatMap(data){
-	var points =  data.map( function(d){var e = d.LatLng; e.count = 1000; return e});
+	var points =  data.map( function(d){var e = d.LatLng; e.count = 1; return e});
   var dict_return = {};
   dict_return.data  = points;
-  dict_return.max = 10000;
-  console.log(dict_return);
-  //console.log(dict_return);
+  dict_return.max = 8;
   //dict_return[max] = 8;
   return dict_return;
 }
@@ -205,7 +211,6 @@ function slideMapUpdate(data, heatMap, date){
 
 	heatMapData = getHeatMap(filtered_listing);
 	heatMap.setData(heatMapData);
-  console.log(heatMap);
 }
 
 
