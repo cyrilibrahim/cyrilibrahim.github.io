@@ -66,13 +66,13 @@ h1{
 }
 /* Section map */
 
-#map{
+.map{
 	width: 100%;
 	height: 100%;
 	position: absolute;
 }
 
-#map_slider{
+.map_slider{
 	position: absolute;
 	bottom: 10%;
 	width: 80%;
@@ -80,14 +80,45 @@ h1{
 	transform: translateX(-50%);
 }
 
-#map_info{
+.map_slider #handle-one{
+
+}
+
+.map_title{
+	position: absolute;
+	top: 4%;
+	z-index: 5;
+	width: 100%;
+	font-family: "Oswald";
+}
+
+.map_title h2{
+	font-size: 3rem;
+	width: 100%;
+	text-align: center;
+	color: #ff5a5f;
+	font-weight: bold;
+}
+
+.map_info{
 	position: absolute;
 	bottom: 20%;
 	left: 10%;
-	text-align: left;
+	text-align: center;
+	background: #ff5a5f;
+	color: white;
+	font-weight: bold;
+	padding: 15px 37px;
+	min-width: 23%;
+	opacity: 0.8;
+	border-radius: 21px;
 }
 
-#map_info .big_text{
+.map_info p{
+	margin-bottom: 1px;
+}
+
+.map_info .big_text{
 	font-size: 2.7rem;
 }
 
@@ -95,7 +126,10 @@ h1{
      vertical-align: top;
 }
 
-
+#map_slider_reviews{
+	fill: white;
+	color: white;
+}
 /** Neighborhood line char */
 #price_by_neighborhood_chart_container{
 	position: absolute;

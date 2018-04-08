@@ -42,6 +42,44 @@
     });
   }
 
+  function mergeReviews(listing, reviews){
+
+    var merged_listing = {};
+
+    var format = d3.time.format("%Y-%m-%d");
+
+    var reviews_by_id = d3.nest()
+    .key(function(d) { return d.listing_id; })
+    .rollup(function(v) { return v.map(function(e){return e.date = format.parse(e.date);});})
+    .entries(reviews);
+
+    reviews_by_id.forEach(function(d){
+      merged_listing[d.key] = {}
+      merged_listing[d.key].values = d.values
+    });
+
+    listing.forEach(function(d){
+      if(d.id in merged_listing){
+        merged_listing[d.id].lat = d.latitude;
+        merged_listing[d.id].lon = d.longitude;
+      }
+    });
+
+    var merged_as_array = [];
+
+    for (var key in merged_listing) {
+        if(merged_listing[key].lat != null){
+          var new_obj = {};
+          new_obj.LatLng = new L.LatLng(merged_listing[key].lat, merged_listing[key].lon);
+          new_obj.reviews = merged_listing[key].values;
+          new_obj.id = key;
+          new_obj.count = 0;
+          merged_as_array.push(new_obj);
+        }
+    }
+
+    return merged_as_array;
+  }
 
   function filterColumns(data){
     

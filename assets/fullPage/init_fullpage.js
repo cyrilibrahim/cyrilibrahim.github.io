@@ -12,10 +12,10 @@ $(document).ready(function() {
 			}
 			//using index
 			if(index == 2){
-				//console.log(queue);
-				//queue.animateMap();
-				//console.log(listing_data);
-      			animateMap();
+      			//animateMap();
+			}
+			else if(index == 3){
+      			animateMapReviews();
 			}
 		}
 

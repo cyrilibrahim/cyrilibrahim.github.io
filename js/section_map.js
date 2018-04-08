@@ -75,6 +75,9 @@ function animateMap(){
           t += step;
           slideMapUpdate(listing_data, heatLayer ,date_interpolator(t));
           $("#handle-one").css('left', t*100+"%");
+          $("#handle-one").after().css('content', "test");
+          console.log($("#handle-one"));
+
        }
        else { 
           clearInterval(interval);

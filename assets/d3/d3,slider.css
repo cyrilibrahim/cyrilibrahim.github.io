@@ -2,13 +2,12 @@
     position: relative;
     font-family: Verdana,Arial,sans-serif;
     font-size: 1.1em;
-    border: 1px solid #aaaaaa;
     z-index: 2;
-}
+    height: 10px;
+    background: #eaeaea;
+    border: 0;
 
-.d3-slider-horizontal {
-    height: .8em;
-}  
+}
 
 .d3-slider-range {
   background:#2980b9;
@@ -33,22 +32,31 @@
 
 .d3-slider-handle {
     position: absolute;
-    width: 1.2em;
-    height: 1.2em;
-    border: 1px solid #d3d3d3;
-    border-radius: 4px;
-    background: #eee;
-    background: linear-gradient(to bottom, #eee 0%, #ddd 100%);
+    /*width: 1.2em;
+    height: 1.2em;*/
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid rgb(255, 90, 95);
     z-index: 3;
 }
 
+.d3-slider-handle:after{
+  content: attr(data-content) ;
+  position: absolute;
+  top: -63px;
+  right: -34px;
+  font-size: 2rem;
+}
+
 .d3-slider-handle:hover {
-    border: 1px solid #999999;
+    /*border: 1px solid #999999;*/
 }
 
 .d3-slider-horizontal .d3-slider-handle {
-    top: -.3em;
-    margin-left: -.6em;
+    top: -1.3em;
+    margin-left: -1.3em;
 }
 
 .d3-slider-axis {
