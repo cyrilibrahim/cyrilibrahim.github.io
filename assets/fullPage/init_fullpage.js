@@ -15,7 +15,7 @@ $(document).ready(function() {
       			//animateMap();
 			}
 			else if(index == 3){
-      			animateMapReviews();
+      			//animateMapReviews();
 			}
 		}
 

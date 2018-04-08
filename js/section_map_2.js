@@ -8,7 +8,6 @@
   var endDate = new Date("2016-04-01");
   var secondsInDay = 60 * 60 * 24;
   var intervalReviewsAnimation = 60 * 24 * 10;
-  console.log(intervalReviewsAnimation);
   var date_interpolator = d3.interpolateDate(startDate, endDate);
 
   var nb_step_animation = 500;

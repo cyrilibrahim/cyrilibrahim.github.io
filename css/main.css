@@ -27,6 +27,9 @@ h1{
   fill: none;
 }
 
+h1,h2,h3{
+	font-family: "Oswald";
+}
 
 /* Section d'accueil */
 
@@ -47,6 +50,8 @@ h1{
 	position: absolute;
 	top: 25%;
 	width: 100%;
+	font-family: "Oswald";
+	font-weight: bold;
 }
 
 #bg {
@@ -162,22 +167,68 @@ h1{
 /* FILTER SECTION */ 
 
 .big_result{
-	font-size: 7rem;
+	font-size: 4rem;
+}
+
+#filter_section .layout_title{
+	position: absolute;
+	top: 0%;
+	height: 15%;
+	width: 100%;
+	color: white;
+	background: #ff5a5f;
+	padding-bottom: 53px;
+	padding-top: 39px;
+	z-index: 5;
+
+}
+#filter_section h2{
+	font-size: 3rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%, -50%);
 }
 
 #filter_result h3{
-	font-size: 2rem;
-	font-weight: bold;
+	font-size: 1.3rem;
+	line-height: 2rem;
+	margin-bottom: 0px;
 }
 
 #filter_result h3, #filter_result span{
 	color: rgb(255, 90, 95);
 }
 
-#filter_section h1{
-	color: white;
-	background-color: rgb(255, 90, 95);
-	padding-bottom: 30px;
-	padding-top: 30px;
-	margin-bottom: 130px;
+#filter_section .filter_layout{
+	position: absolute;
+	left: 0%;
+	width: 20%;
+	top: 15%;
+	height: 85%;
+	padding: 40px 35px;
 }
+
+
+/*Down pointing*/
+#filter_section #filtre_triangle_container{
+	width: 100%;
+}
+
+#filter_section #filtre_triangle_container #triangle{
+	font-size: 5rem;
+	color: rgb(255, 90, 95);
+}
+
+
+#filter_section .map_layout{
+	background: grey;
+	position: absolute;
+	left: 20%;
+	width: 80%;
+	top: 15%;
+	height: 85%;
+	text-align: center;
+}
+
