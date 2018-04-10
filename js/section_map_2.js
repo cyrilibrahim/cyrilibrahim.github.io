@@ -249,7 +249,6 @@ function getHeatMapWithIntensity(data){
 }
 
 
-
 function slideMapUpdate(data, heatMap, date){
   
 	var nb_announces = 0;

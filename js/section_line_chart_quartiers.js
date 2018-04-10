@@ -15,7 +15,7 @@ var svg_line_chart = d3.select("#price_by_neighborhood_chart_container").append(
 var svg_line_chart_legend = d3.select("#price_by_neighborhood_legend_container").append("svg")
     .attr("width", $("#price_by_neighborhood_legend_container").width())
     .attr("height", $("#price_by_neighborhood_legend_container").height())
-  .append("g")
+  .append("g");
 
 var g_line_chart = svg_line_chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -37,8 +37,8 @@ var line_neighborhood = d3.svg.line()
 .x(function(d) { return x_line_chart(d.date); })
 .y(function(d) { return y_line_chart(d.price); });
 
-
-d3.json("./data/price_by_neighborhood.json", function(error, data) {
+/*
+d3.json("./data/price_by_neighborhood_boston.json", function(error, data) {
   
   if (error) {
     throw error;
@@ -67,8 +67,14 @@ d3.json("./data/price_by_neighborhood.json", function(error, data) {
   // Legend
   legend(svg_line_chart_legend, data, neighborhood_color);
 
-});
+});*/
 
+drawData("Montreal");
+
+
+$( "#city_selector" ).change(function() {
+  updateData(this.value);
+});
 
 function domainColorNeighborhood(color, data){
   
@@ -145,7 +151,7 @@ function createContextLineChart(g, sources, line, color) {
 }
 
 
-function legend(svg, sources, color, width) {
+function draw_legend(svg, sources, color, width) {
   // TODO: Créer la légende accompagnant le graphique.
   
 
@@ -205,8 +211,114 @@ function displayLine(element, color) {
     circle.attr("activated","true");
     line.style("opacity", 0.8);
   }
+}
+
+// ** Update data section (Called from the select)
+function drawData(city) {
+
+    var path_data = (city == "Montreal")? "./data/price_by_neighborhood.json" :"./data/price_by_neighborhood_boston.json" ;
+
+    // Get the data again
+    d3.json(path_data, function(error, data) {
+
+    if (error) {
+      throw error;
+    }
+
+    data = filterDataMinListing(data, minListing);
+    domainColorNeighborhood(neighborhood_color, data);
+    parseDateNeighborhood(parseMonth, data);
+    sortByDateNeighborhood(data);
+
+    domainX(x_line_chart,data);
+    domainY(y_line_chart, data);
+
+    createContextLineChart(g_line_chart, data, line_neighborhood, neighborhood_color);
+
+    // Axes focus
+    g_line_chart.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+    g_line_chart.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Prix moyen par jour");
+
+    // Legend
+    draw_legend(svg_line_chart_legend, data, neighborhood_color);
 
 
+    });
+}
+// ** Update data section (Called from the select)
+function updateData(city) {
+    g_line_chart.selectAll(".neighborhood").remove();
+    svg_line_chart_legend.selectAll(".legend").remove();
+
+    var path_data = (city == "Montreal")? "./data/price_by_neighborhood.json" :"./data/price_by_neighborhood_boston.json" ;
+
+    // Get the data again
+    d3.json(path_data, function(error, new_data) {
+
+    if (error) {
+      throw error;
+    }
+
+
+    var stroke_width = 0.008;
+    var new_minListing = minListing;
+    if(city == "Boston"){
+      stroke_width = stroke_width * 2;
+      new_minListing = 200;
+    }
+
+    new_data = filterDataMinListing(new_data, new_minListing);
+    domainColorNeighborhood(neighborhood_color, new_data);
+    parseDateNeighborhood(parseMonth, new_data);
+    sortByDateNeighborhood(new_data);
+
+    domainX(x_line_chart,new_data);
+    domainY(y_line_chart, new_data);
+
+    var neighborhood = g_line_chart.selectAll(".neighborhood");
+
+    //neighborhood.remove();
+    var new_paths = neighborhood
+      .data(new_data)
+      .enter().append("g")
+        .attr("class", "neighborhood");
+
+
+    new_paths.append("path")
+        .attr("class", "line line_neighborhood")
+        .attr("d", function(d) { return line_neighborhood(d.values); })
+        .style("stroke", function(d) { return neighborhood_color(d.quartier); })
+        .style("stroke-width", function(d){return stroke_width * d.nb_annonces})
+        .style("opacity", 0.8);
+/*
+  neighborhood.selectAll("path")
+      .attr("d", function(d) { return line_neighborhood(d.values); })
+      .style("stroke", function(d) { return neighborhood_color(d.quartier); })
+      .style("stroke-width", function(d){return 0.008 * d.nb_annonces})
+      .style("opacity", 0.8);*/
+
+    // Axes focus
+    g_line_chart.select(".x.axis")
+      .call(xAxis);
+
+    g_line_chart.select(".y.axis")
+      .call(yAxis);
+
+    draw_legend(svg_line_chart_legend, new_data, neighborhood_color);
+
+    });
 }
 
 function sortByDateAscending(a, b) {

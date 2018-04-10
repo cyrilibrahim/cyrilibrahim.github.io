@@ -12,10 +12,10 @@ $(document).ready(function() {
 			}
 			//using index
 			if(index == 2){
-      			//animateMap();
+      			animateMap();
 			}
 			else if(index == 3){
-      			//animateMapReviews();
+      			animateMapReviews();
 			}
 		}
 

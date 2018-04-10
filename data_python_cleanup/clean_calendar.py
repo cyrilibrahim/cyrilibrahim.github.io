@@ -15,7 +15,7 @@ csv.field_size_limit(1000000)
 
 
 # Dict of suburb with all listing_ids
-with open('../data/listing_montreal_2016.csv', 'rt', encoding="utf8") as csvfile:
+with open('../data/calendars/listings.csv', 'rt', encoding="utf8") as csvfile:
     spamreader = csv.reader(csvfile, delimiter=',', skipinitialspace=True)
     next(spamreader, None)  # skip the headers
     for row in spamreader:
@@ -34,7 +34,7 @@ def getNeighborhoodName( id_listing,neighborhood_dict):
     return "other"
 
 # Raw calendar to dict of listing_id with one mean price for each month
-with open('../data/calendar.csv', 'rt') as csvfile:
+with open('../data/calendars/calendar.csv', 'rt') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
      next(spamreader, None)  # skip the headers
      for row in spamreader:
@@ -51,7 +51,7 @@ with open('../data/calendar.csv', 'rt') as csvfile:
             new_data[split_row[0]][month].append(float(split_row[3].replace("$", "").replace('"',"").replace(",","")))
 
 # Raw calendar to dict of listing_id with one mean price for each month
-with open('../data/calendar_2.csv', 'rt') as csvfile:
+with open('../data/calendars/calendar1.csv', 'rt') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
      next(spamreader, None)  # skip the headers
      for row in spamreader:
@@ -67,6 +67,23 @@ with open('../data/calendar_2.csv', 'rt') as csvfile:
         if(split_row[3] != ""):
             new_data[split_row[0]][month].append(float(split_row[3].replace("$", "").replace('"',"").replace(",","")))
 
+# Raw calendar to dict of listing_id with one mean price for each month
+with open('../data/calendars/calendar2.csv', 'rt') as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    next(spamreader, None)  # skip the headers
+    for row in spamreader:
+
+        split_row = row
+        month = split_row[1][:7]
+        if (not split_row[0] in new_data):
+            new_data[split_row[0]] = {}
+
+        if (not month in new_data[split_row[0]]):
+            new_data[split_row[0]][month] = []
+
+        if (split_row[3] != ""):
+            new_data[split_row[0]][month].append(
+                float(split_row[3].replace("$", "").replace('"', "").replace(",", "")))
 
 # Get mean price of each month
 for key, value in new_data.items():
@@ -94,6 +111,6 @@ for key, value in neighborhood_price_by_month_dict.items():
     neighborhood_object = {"quartier":key,"values":values, "nb_annonces": len(neighborhood_dict[key]) if key is not "other" else 0}
     neighborhood_price_by_month.append(neighborhood_object)
 
-with open('../data/price_by_neighborhood.json', 'w') as outfile:
+with open('../data/price_by_neighborhood_boston.json', 'w') as outfile:
     json.dump(neighborhood_price_by_month, outfile, sort_keys=True)
 

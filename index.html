@@ -10,6 +10,8 @@
 		<link rel="stylesheet" type="text/css"  href="assets/leaflet/leaflet.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css"  href="assets/bootstrap-slider/bootstrap-slider.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css"  href="assets/d3/d3,slider.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css"  href="assets/markercluster/MarkerCluster.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css"  href="assets/markercluster/MarkerCluster.Default.css" rel="stylesheet">
 
 		<link href="https://fonts.googleapis.com/css?family=Oswald|Varela+Round|Signika" rel="stylesheet">
 
@@ -25,7 +27,7 @@
 
 		<div id="fullpage">
 			<div id="section_accueil" class="section not_vertically_centered">
-				<h1>VISUALISER L'ÉVOLUTION ET L'IMPACT D'AIRBNB <br> À MONTRÉAL DE 2009 À 2016</h1>
+				<h1>VISUALISER L'ÉVOLUTION D'AIRBNB <br> À MONTRÉAL DE 2009 À 2016</h1>
 				<i id="scroll_arrow" class="fas fa-angle-down bounce"></i>
 				<div id="bg">
 				  <img src="img/ville_1.svg" alt="">
@@ -58,7 +60,12 @@
 			</div>
 
 			<div id="price_by_neighborhood" class="section">
-				<h1>ÉVOLUTION DES PRIX PAR QUARTIER</h1>
+				<h1>ÉVOLUTION DES PRIX PAR QUARTIER À   
+					    <select class="form-control" id="city_selector">
+  					        <option value="Montreal">Montréal</option>
+				      		<option value="Boston">Boston</option>	
+					    </select>
+  				</h1>
 				<div id="price_by_neighborhood_chart_container">
 				</div>
 				<div id="price_by_neighborhood_legend_container">
@@ -92,7 +99,9 @@
 									<div class="form-group">
 										<label for="">Filtrer par interval de prix</label>
 										<br>
-										<b>$ 10</b> <input id="price_slider" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>$ 1000</b>
+										<b>$ 10</b> <input id="price_slider" type="text" class="span2" value="" data-slider-min="10" data-slider-max="600" data-slider-step="5" data-slider-value="[10,600]"/> <b>$ 600</b>
+										<br>
+										De <span id="min_price"></span> à <span id="max_price"></span> dollars (USD)
 									</div>
 
 								</div>
@@ -102,16 +111,34 @@
 								<i id="triangle" class="fas fa-caret-down"></i>
 							</div>
 
-
-							<div class="col-12" id="filter_result">
-								<h3>NOMBRE D'AVIS MOYEN</h3>
-								<span class="big_result" id="nb_review"></span>
+							<div class="row" id="filter_result">
+								<div class="col-12" >
+									<h3>NOMBRE D'AVIS MOYEN</h3>
+									<span class="big_result" id="nb_review"></span>
+								</div>
+								<div class="col-6">
+									<h4>NOMBRE D'ANNONCES</h4>
+									<span id="nb_announces"></span>
+								</div>
+								<div class="col-6">
+									<h4>PRIX MOYEN</h4>
+									<span id="mean_price"></span>
+								</div>
+								<div class="col-6">
+									<h4>NOTE MOYENNE</h4>
+									<span id="score"></span>
+								</div>
+								<div class="col-6">
+									<h4>DISPONIBILITÉ MOYENNE</h4>
+									<span id="disponibility_365"></span>
+								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
 				
-				<div class="map_layout">
+				<div id="map_filter" class="map_layout">
 					
 				</div>
 
@@ -146,6 +173,9 @@
 		<!--<script type="text/javascript" src="assets/leaflet/leaflet-heat.js"></script>-->
 		<script type="text/javascript" src="assets/heat_map/heatmap.min.js"></script>
 		<script type="text/javascript" src="assets/heat_map/heatmap_leaflet.js"></script>
+		
+		<!-- Marker cluster -->
+		<script type="text/javascript" src="assets/markercluster/leaflet.markercluster.js"></script>
 
 		<!-- My scripts --> 
 		<script type="text/javascript" src="js/processing.js"></script>
